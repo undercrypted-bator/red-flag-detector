@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9518032393103480"
-     crossorigin="anonymous"></script>
   <meta charset="UTF-8" />
   <title>Relationship Red Flag Detector 🚩</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,65 +9,70 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
 
-    /* Animation */
+    /* Result animation */
     .fade-slide {
-      animation: fadeSlide 0.4s ease-out;
+      animation: fadeSlide .35s ease-out;
     }
-
     @keyframes fadeSlide {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 
 <body class="bg-black text-white min-h-screen flex items-center justify-center px-4">
 
-  <div class="max-w-md w-full text-center bg-zinc-900 p-6 rounded-xl shadow-lg">
-    
-    <h1 class="text-3xl font-bold mb-3">
-      Relationship Red Flag Detector 🚩
-    </h1>
+  <main class="w-full max-w-md">
+    <section class="bg-zinc-900/90 backdrop-blur p-6 rounded-2xl shadow-xl border border-zinc-800">
+      
+      <header class="mb-5 text-center">
+        <h1 class="text-3xl font-extrabold tracking-tight">
+          Relationship Red Flag Detector 🚩
+        </h1>
+        <p class="text-zinc-400 text-sm mt-2">
+          Type ONE thing your partner does.
+        </p>
+      </header>
 
-    <p class="text-gray-400 mb-6 text-sm">
-      Type ONE thing your partner does.
+      <div class="space-y-4">
+        <input
+          id="inputText"
+          type="text"
+          placeholder="e.g. replies late but posts stories"
+          class="w-full px-4 py-3 rounded-xl text-black bg-white
+                 focus:outline-none focus:ring-2 focus:ring-red-500"
+        />
+
+        <button
+          onclick="analyzeFlag()"
+          class="w-full py-3 rounded-xl font-bold
+                 bg-red-600 hover:bg-red-700 active:scale-[0.99]
+                 transition"
+        >
+          Analyze 🚩
+        </button>
+      </div>
+
+      <!-- RESULT -->
+      <div
+        id="resultBox"
+        class="hidden mt-6 p-4 rounded-xl border text-left text-sm fade-slide"
+      ></div>
+
+      <footer class="mt-6 text-center">
+        <p class="text-xs text-zinc-500">
+          For entertainment purposes only.
+        </p>
+      </footer>
+
+    </section>
+
+    <p class="mt-4 text-center text-xs text-zinc-600">
+      Built for fun • Fast & private
     </p>
-
-    <input
-      id="inputText"
-      type="text"
-      placeholder="e.g. replies late but posts stories"
-      class="w-full px-4 py-3 rounded text-black mb-4 focus:outline-none focus:ring-2 focus:ring-red-500"
-    />
-
-    <button
-      onclick="analyzeFlag()"
-      class="w-full bg-red-600 hover:bg-red-700 transition py-3 rounded font-bold"
-    >
-      Analyze 🚩
-    </button>
-
-    <!-- RESULT -->
-    <div
-      id="resultBox"
-      class="hidden mt-6 p-4 border rounded text-left text-sm"
-    ></div>
-
-    <p class="text-xs text-gray-500 mt-6">
-      For entertainment purposes only.
-    </p>
-
-  </div>
+  </main>
 
   <script src="script.js"></script>
 </body>

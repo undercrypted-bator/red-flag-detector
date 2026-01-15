@@ -2,106 +2,233 @@ function analyzeFlag() {
   const input = document.getElementById("inputText").value.toLowerCase();
   const resultBox = document.getElementById("resultBox");
 
-  if (input.trim() === "") {
+  if (!input.trim()) {
     alert("Please type something first!");
     return;
   }
 
-  // 🔴 Strong Red Flags
-  const redKeywords = [
-    "late",
-    "ignores",
-    "dry replies",
-    "password",
+  /* ================================
+     🚨 ABSOLUTE RED FLAGS (AUTO 🚩)
+     Any one of these = RED, no debate
+     ================================ */
+  const absoluteRed = [
+    // Physical harm
+    "hit", "hits", "hitting", "slap", "slaps", "slapped",
+    "push", "pushes", "pushed", "kick", "kicks",
+    "choke", "chokes", "hurt me", "hurts me",
+    "violent", "violence",
+
+    // Threats & fear
+    "threaten", "threatens", "threatened",
+    "scares me", "intimidates me",
+
+    // Severe emotional abuse
+    "abusive", "abuse", "gaslight", "gaslights",
+    "humiliates me", "publicly humiliates",
+    "calls me names", "verbal abuse"
+  ];
+
+  /* ================================
+     🔴 DISRESPECT & CONTROL (STRONG 🚩)
+     ================================ */
+  const disrespectControl = [
+    "tells me to shut up",
+    "tells me to be quiet",
+    "talks down to me",
+    "orders me around",
+    "controls me",
+    "controls who i talk to",
+    "controls what i wear",
+    "checks my phone",
+    "reads my messages",
+    "invades my privacy",
+    "embarrasses me",
+    "insults me",
+    "disrespects me",
+    "yells at me",
+    "shouts at me",
+    "dismisses my feelings",
+    "makes fun of me",
+    "belittles me"
+  ];
+
+  /* ================================
+     🔴 TRUST VIOLATIONS (RED 🚩)
+     ================================ */
+  const trustIssues = [
+    "lies to me",
+    "lied to me",
+    "hides things",
     "hides phone",
-    "lies",
-    "gaslight",
-    "toxic",
-    "ex",
-    "never calls",
-    "disappears"
+    "secretive",
+    "cheated",
+    "cheats",
+    "cheating",
+    "talks to ex secretly",
+    "flirting with others",
+    "breaks promises",
+    "broke my trust"
   ];
 
-  // 🟡 Warning / Context Flags
-  const yellowKeywords = [
-    "busy",
-    "work",
-    "confused",
-    "overthinking",
-    "stress",
+  /* ================================
+     🟡 EMOTIONAL NEGLECT (YELLOW ⚠️)
+     ================================ */
+  const emotionalNeglect = [
+    "ignores me",
+    "emotionally unavailable",
+    "never listens",
+    "doesn't listen",
+    "does not listen",
+    "avoids conversations",
+    "avoids communication",
+    "doesn't care",
+    "does not care",
+    "cold behavior",
+    "emotionally distant"
+  ];
+
+  /* ================================
+     🟡 INCONSISTENCY & CONFUSION
+     ================================ */
+  const inconsistency = [
+    "hot and cold",
     "mixed signals",
-    "sometimes",
-    "distance"
+    "sometimes ignores",
+    "disappears",
+    "ghosts me",
+    "inconsistent replies",
+    "dry replies",
+    "active but not replying",
+    "says busy but online",
+    "comes and goes"
   ];
 
-  // 🟢 Green Flags
-  const greenKeywords = [
-    "food",
+  /* ================================
+     🟡 CONTEXTUAL STRESS (EXPLAINS, NOT EXCUSES)
+     ================================ */
+  const contextStress = [
+    "busy",
+    "work pressure",
+    "job stress",
+    "exam stress",
+    "family problems",
+    "family issues",
+    "mental health",
+    "burnout",
+    "overwhelmed",
+    "anxious",
+    "depressed"
+  ];
+
+  /* ================================
+     🟢 CARE, RESPECT & REPAIR
+     ================================ */
+  const careRepair = [
     "listens",
-    "supports",
-    "effort",
+    "listens calmly",
+    "respects me",
+    "respects my boundaries",
+    "communicates clearly",
+    "communicates openly",
+    "apologizes",
+    "takes responsibility",
+    "makes time",
     "checks on me",
-    "respects",
-    "communicates",
-    "understands"
+    "supports me",
+    "supports my goals",
+    "brings me food",
+    "shows effort",
+    "consistent",
+    "kind to me"
   ];
 
-  const redResponses = [
-    "🚩 MAJOR RED FLAG\nConsistent unhealthy behavior detected. This usually doesn’t improve without consequences.",
-    "🚩 RED FLAG\nPatterns like this often lead to emotional exhaustion.",
-    "🚩 WARNING\nThis is not a misunderstanding — it’s a habit."
+  /* ================================
+     🔑 INTENSITY MODIFIERS
+     ================================ */
+  const intensityStrong = [
+    "always", "never", "constantly", "every time", "all the time"
+  ];
+  const intensityMild = [
+    "sometimes", "once", "rarely", "occasionally", "lately"
   ];
 
-  const yellowResponses = [
-    "⚠️ YELLOW FLAG\nMixed signals detected. Context matters here — observe actions, not words.",
-    "⚠️ CAUTION\nNot toxic yet, but patterns need clarity.",
-    "⚠️ MID FLAG\nCould improve with communication, or could worsen."
-  ];
+  /* ================================
+     RESPONSES
+     ================================ */
+  const responses = {
+    red: [
+      "🚩 RED FLAG\nThis behavior crosses important boundaries and is not healthy.",
+      "🚩 MAJOR RED FLAG\nThis is a serious concern. Respect and safety are non-negotiable.",
+      "🚩 WARNING\nThis pattern can cause long-term harm. Take it seriously."
+    ],
+    yellow: [
+      "⚠️ YELLOW FLAG\nThere are concerning signs, but context and patterns matter.",
+      "⚠️ CAUTION\nThis needs clear communication and observation over time.",
+      "⚠️ MIXED SIGNALS\nNot all bad, not all good. Pay attention to consistency."
+    ],
+    green: [
+      "🟢 GREEN FLAG\nThis reflects care, respect, and emotional maturity.",
+      "🟢 HEALTHY\nConsistent positive behavior is a strong sign.",
+      "🟢 SAFE\nThis shows effort and respect for boundaries."
+    ]
+  };
 
-  const greenResponses = [
-    "🟢 GREEN FLAG\nHealthy behavior detected. This shows emotional maturity.",
-    "🟢 SAFE\nConsistent positive effort matters more than words.",
-    "🟢 HEALTHY\nThis is how bare minimum should actually look."
-  ];
+  /* ================================
+     🚨 RULE 1: ABSOLUTE RED
+     ================================ */
+  for (let w of absoluteRed) {
+    if (input.includes(w)) {
+      return show(responses.red, "border-red-600");
+    }
+  }
 
+  /* ================================
+     SCORING
+     ================================ */
   let redScore = 0;
   let yellowScore = 0;
   let greenScore = 0;
 
-  redKeywords.forEach(word => {
-    if (input.includes(word)) redScore += 3;
+  disrespectControl.forEach(w => input.includes(w) && (redScore += 3));
+  trustIssues.forEach(w => input.includes(w) && (redScore += 3));
+
+  emotionalNeglect.forEach(w => input.includes(w) && (yellowScore += 2));
+  inconsistency.forEach(w => input.includes(w) && (yellowScore += 2));
+  contextStress.forEach(w => input.includes(w) && (yellowScore += 1));
+
+  careRepair.forEach(w => input.includes(w) && (greenScore += 2));
+
+  intensityStrong.forEach(w => {
+    if (input.includes(w)) {
+      redScore += 1;
+      yellowScore += 1;
+    }
   });
 
-  yellowKeywords.forEach(word => {
-    if (input.includes(word)) yellowScore += 1;
+  intensityMild.forEach(w => {
+    if (input.includes(w)) {
+      redScore -= 1;
+      yellowScore -= 1;
+    }
   });
 
-  greenKeywords.forEach(word => {
-    if (input.includes(word)) greenScore += 2;
-  });
-
-  let finalText = "";
-  let borderClass = "";
-
-  // 🧠 Decision Logic
-  if (redScore >= 4 && greenScore === 0) {
-    finalText = redResponses[Math.floor(Math.random() * redResponses.length)];
-    borderClass = "border-red-600";
-  } 
-  else if (redScore > 0 && greenScore > 0) {
-    finalText = yellowResponses[Math.floor(Math.random() * yellowResponses.length)];
-    borderClass = "border-yellow-400";
-  }
-  else if (yellowScore > redScore && yellowScore > greenScore) {
-    finalText = yellowResponses[Math.floor(Math.random() * yellowResponses.length)];
-    borderClass = "border-yellow-400";
-  }
-  else {
-    finalText = greenResponses[Math.floor(Math.random() * greenResponses.length)];
-    borderClass = "border-green-500";
+  /* ================================
+     FINAL COUNSELLOR DECISION
+     ================================ */
+  if (redScore >= 3) {
+    show(responses.red, "border-red-600");
+  } else if (redScore > 0 && greenScore > 0) {
+    show(responses.yellow, "border-yellow-400");
+  } else if (yellowScore > greenScore) {
+    show(responses.yellow, "border-yellow-400");
+  } else {
+    show(responses.green, "border-green-500");
   }
 
-  resultBox.className = `mt-6 p-4 border rounded text-left text-sm ${borderClass} fade-slide`;
-  resultBox.innerText = finalText;
-  resultBox.classList.remove("hidden");
+  function show(list, border) {
+    const text = list[Math.floor(Math.random() * list.length)];
+    resultBox.className = `mt-6 p-4 border rounded text-left text-sm ${border} fade-slide`;
+    resultBox.innerText = text;
+    resultBox.classList.remove("hidden");
+  }
 }

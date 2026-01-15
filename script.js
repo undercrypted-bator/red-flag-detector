@@ -7,219 +7,202 @@ function analyzeFlag() {
     return;
   }
 
-  /* ================================
-     🚨 ABSOLUTE RED FLAGS (AUTO 🚩)
-     Any one of these = RED, no debate
-     ================================ */
-  const absoluteRed = [
-    // Physical harm
-    "hit", "hits", "hitting", "slap", "slaps", "slapped",
-    "push", "pushes", "pushed", "kick", "kicks",
-    "choke", "chokes", "hurt me", "hurts me",
-    "violent", "violence",
-
-    // Threats & fear
-    "threaten", "threatens", "threatened",
-    "scares me", "intimidates me",
-
-    // Severe emotional abuse
-    "abusive", "abuse", "gaslight", "gaslights",
-    "humiliates me", "publicly humiliates",
-    "calls me names", "verbal abuse"
+  /* =====================================================
+     🚨 LEVEL 1: PHYSICAL SAFETY (AUTO RED)
+     ===================================================== */
+  const physicalAbuse = [
+    "hit","hits","hitting","slap","slaps","slapped",
+    "push","pushes","pushed","kick","kicks","choke","chokes",
+    "violent","violence","hurts me","physically hurts"
   ];
 
-  /* ================================
-     🔴 DISRESPECT & CONTROL (STRONG 🚩)
-     ================================ */
-  const disrespectControl = [
-    "tells me to shut up",
-    "tells me to be quiet",
-    "talks down to me",
-    "orders me around",
-    "controls me",
-    "controls who i talk to",
-    "controls what i wear",
-    "checks my phone",
-    "reads my messages",
-    "invades my privacy",
-    "embarrasses me",
-    "insults me",
-    "disrespects me",
-    "yells at me",
-    "shouts at me",
-    "dismisses my feelings",
-    "makes fun of me",
-    "belittles me"
+  /* =====================================================
+     🚨 LEVEL 2: SEVERE EMOTIONAL ABUSE (AUTO RED)
+     ===================================================== */
+  const severeEmotionalAbuse = [
+    "threatens me","threatened me","intimidates me",
+    "gaslight","gaslighting",
+    "humiliates me","public humiliation",
+    "verbal abuse","abusive language",
+    "calls me names","destroys my confidence"
   ];
 
-  /* ================================
-     🔴 TRUST VIOLATIONS (RED 🚩)
-     ================================ */
-  const trustIssues = [
-    "lies to me",
-    "lied to me",
-    "hides things",
-    "hides phone",
-    "secretive",
-    "cheated",
-    "cheats",
-    "cheating",
-    "talks to ex secretly",
-    "flirting with others",
-    "breaks promises",
-    "broke my trust"
+  /* =====================================================
+     🔴 LEVEL 3: CONTROL & POWER
+     ===================================================== */
+  const control = [
+    "controls me","controls my life","controls my friends",
+    "controls my clothes","controls where i go",
+    "checks my phone","reads my messages",
+    "demands passwords","tracks my location",
+    "orders me around","makes decisions for me"
   ];
 
-  /* ================================
-     🟡 EMOTIONAL NEGLECT (YELLOW ⚠️)
-     ================================ */
-  const emotionalNeglect = [
-    "ignores me",
-    "emotionally unavailable",
-    "never listens",
-    "doesn't listen",
-    "does not listen",
-    "avoids conversations",
-    "avoids communication",
-    "doesn't care",
-    "does not care",
-    "cold behavior",
-    "emotionally distant"
+  /* =====================================================
+     🔴 LEVEL 4: TRUST & FIDELITY
+     ===================================================== */
+  const trust = [
+    "lies to me","lied to me","hides things",
+    "hides phone","deletes messages","secretive",
+    "cheated","cheats","cheating",
+    "emotionally cheating","flirting with others",
+    "broke my trust","breaks promises"
   ];
 
-  /* ================================
-     🟡 INCONSISTENCY & CONFUSION
-     ================================ */
+  /* =====================================================
+     🟠 LEVEL 5: CHRONIC DISRESPECT
+     ===================================================== */
+  const disrespect = [
+    "tells me to shut up","tells me to be quiet",
+    "talks down to me","dismisses my feelings",
+    "embarrasses me","belittles me",
+    "makes fun of me","invalidates me"
+  ];
+
+  /* =====================================================
+     🟡 LEVEL 6: EMOTIONAL NEGLECT
+     ===================================================== */
+  const neglect = [
+    "ignores me","emotionally unavailable",
+    "emotionally distant","cold behavior",
+    "never listens","doesn't listen",
+    "avoids conversations","avoids communication",
+    "stonewalls me","takes me for granted"
+  ];
+
+  /* =====================================================
+     🟡 LEVEL 7: INCONSISTENCY / PUSH–PULL
+     ===================================================== */
   const inconsistency = [
-    "hot and cold",
-    "mixed signals",
-    "sometimes ignores",
-    "disappears",
-    "ghosts me",
-    "inconsistent replies",
-    "dry replies",
-    "active but not replying",
-    "says busy but online",
-    "comes and goes"
+    "hot and cold","mixed signals","sometimes ignores",
+    "disappears","ghosts me","comes and goes",
+    "dry replies","inconsistent replies",
+    "active but not replying","affection changes suddenly"
   ];
 
-  /* ================================
-     🟡 CONTEXTUAL STRESS (EXPLAINS, NOT EXCUSES)
-     ================================ */
-  const contextStress = [
-    "busy",
-    "work pressure",
-    "job stress",
-    "exam stress",
-    "family problems",
-    "family issues",
-    "mental health",
-    "burnout",
-    "overwhelmed",
-    "anxious",
-    "depressed"
+  /* =====================================================
+     🟡 LEVEL 8: EXTERNAL STRESSORS
+     ===================================================== */
+  const stress = [
+    "busy","work pressure","job stress",
+    "exam stress","career stress",
+    "family issues","family problems",
+    "mental health","anxiety","depression",
+    "burnout","overwhelmed","financial stress"
   ];
 
-  /* ================================
-     🟢 CARE, RESPECT & REPAIR
-     ================================ */
-  const careRepair = [
-    "listens",
-    "listens calmly",
-    "respects me",
-    "respects my boundaries",
-    "communicates clearly",
-    "communicates openly",
-    "apologizes",
-    "takes responsibility",
-    "makes time",
-    "checks on me",
-    "supports me",
-    "supports my goals",
-    "brings me food",
-    "shows effort",
-    "consistent",
-    "kind to me"
+  /* =====================================================
+     🟢 LEVEL 9: REPAIR & ACCOUNTABILITY
+     ===================================================== */
+  const repair = [
+    "apologizes","takes responsibility",
+    "acknowledges mistake","owns up",
+    "tries to improve","working on it",
+    "makes amends","open to feedback"
   ];
 
-  /* ================================
+  /* =====================================================
+     🟢 LEVEL 10: EMOTIONAL MATURITY
+     ===================================================== */
+  const maturity = [
+    "communicates clearly","communicates calmly",
+    "respects boundaries","emotionally aware",
+    "handles conflict well","listens calmly",
+    "validates my feelings"
+  ];
+
+  /* =====================================================
+     🟢 LEVEL 11: LONG-TERM STABILITY
+     ===================================================== */
+  const stability = [
+    "consistent","reliable","supports my goals",
+    "makes time","checks on me",
+    "kind to me","supportive partner",
+    "long term effort","secure attachment"
+  ];
+
+  /* =====================================================
+     🔵 LEVEL 12: TRAJECTORY (DIRECTION OF CHANGE)
+     ===================================================== */
+  const improving = [
+    "getting better","improving",
+    "learning","changing",
+    "relationship improving","making progress"
+  ];
+
+  const worsening = [
+    "getting worse","escalating",
+    "more frequent","happening more",
+    "worsening behavior","out of control"
+  ];
+
+  /* =====================================================
      🔑 INTENSITY MODIFIERS
-     ================================ */
-  const intensityStrong = [
-    "always", "never", "constantly", "every time", "all the time"
-  ];
-  const intensityMild = [
-    "sometimes", "once", "rarely", "occasionally", "lately"
-  ];
+     ===================================================== */
+  const strong = ["always","never","constantly","every time","all the time"];
+  const mild = ["sometimes","once","rarely","occasionally","lately"];
 
-  /* ================================
+  /* =====================================================
      RESPONSES
-     ================================ */
+     ===================================================== */
   const responses = {
     red: [
-      "🚩 RED FLAG\nThis behavior crosses important boundaries and is not healthy.",
-      "🚩 MAJOR RED FLAG\nThis is a serious concern. Respect and safety are non-negotiable.",
-      "🚩 WARNING\nThis pattern can cause long-term harm. Take it seriously."
+      "🚩 RED FLAG\nThis behavior crosses serious boundaries and is unhealthy.",
+      "🚩 MAJOR RED FLAG\nThis pattern indicates risk and should not be ignored.",
+      "🚩 DANGEROUS PATTERN\nRespect, trust, or safety is being compromised."
     ],
     yellow: [
       "⚠️ YELLOW FLAG\nThere are concerning signs, but context and patterns matter.",
-      "⚠️ CAUTION\nThis needs clear communication and observation over time.",
-      "⚠️ MIXED SIGNALS\nNot all bad, not all good. Pay attention to consistency."
+      "⚠️ CAUTION\nThis needs communication and careful observation.",
+      "⚠️ MIXED SIGNALS\nNot all negative, but not stable yet."
     ],
     green: [
       "🟢 GREEN FLAG\nThis reflects care, respect, and emotional maturity.",
-      "🟢 HEALTHY\nConsistent positive behavior is a strong sign.",
-      "🟢 SAFE\nThis shows effort and respect for boundaries."
+      "🟢 HEALTHY\nConsistent positive behavior and accountability are present.",
+      "🟢 STABLE\nThis shows long-term emotional safety."
     ]
   };
 
-  /* ================================
-     🚨 RULE 1: ABSOLUTE RED
-     ================================ */
-  for (let w of absoluteRed) {
+  /* =====================================================
+     🚨 IMMEDIATE RED CHECK
+     ===================================================== */
+  for (let w of physicalAbuse.concat(severeEmotionalAbuse)) {
     if (input.includes(w)) {
       return show(responses.red, "border-red-600");
     }
   }
 
-  /* ================================
-     SCORING
-     ================================ */
-  let redScore = 0;
-  let yellowScore = 0;
-  let greenScore = 0;
+  /* =====================================================
+     SCORING ACROSS 12 LEVELS
+     ===================================================== */
+  let red = 0, yellow = 0, green = 0;
 
-  disrespectControl.forEach(w => input.includes(w) && (redScore += 3));
-  trustIssues.forEach(w => input.includes(w) && (redScore += 3));
+  control.forEach(w => input.includes(w) && (red += 4));
+  trust.forEach(w => input.includes(w) && (red += 4));
+  disrespect.forEach(w => input.includes(w) && (red += 3));
 
-  emotionalNeglect.forEach(w => input.includes(w) && (yellowScore += 2));
-  inconsistency.forEach(w => input.includes(w) && (yellowScore += 2));
-  contextStress.forEach(w => input.includes(w) && (yellowScore += 1));
+  neglect.forEach(w => input.includes(w) && (yellow += 3));
+  inconsistency.forEach(w => input.includes(w) && (yellow += 3));
+  stress.forEach(w => input.includes(w) && (yellow += 1));
 
-  careRepair.forEach(w => input.includes(w) && (greenScore += 2));
+  repair.forEach(w => input.includes(w) && (green += 3));
+  maturity.forEach(w => input.includes(w) && (green += 3));
+  stability.forEach(w => input.includes(w) && (green += 4));
 
-  intensityStrong.forEach(w => {
-    if (input.includes(w)) {
-      redScore += 1;
-      yellowScore += 1;
-    }
-  });
+  improving.forEach(w => input.includes(w) && (green += 2));
+  worsening.forEach(w => input.includes(w) && (red += 2));
 
-  intensityMild.forEach(w => {
-    if (input.includes(w)) {
-      redScore -= 1;
-      yellowScore -= 1;
-    }
-  });
+  strong.forEach(w => input.includes(w) && (red += 1));
+  mild.forEach(w => input.includes(w) && (yellow -= 1));
 
-  /* ================================
-     FINAL COUNSELLOR DECISION
-     ================================ */
-  if (redScore >= 3) {
+  /* =====================================================
+     FINAL DECISION LOGIC
+     ===================================================== */
+  if (red >= 6) {
     show(responses.red, "border-red-600");
-  } else if (redScore > 0 && greenScore > 0) {
+  } else if (red > 0 && green > 0) {
     show(responses.yellow, "border-yellow-400");
-  } else if (yellowScore > greenScore) {
+  } else if (yellow > green) {
     show(responses.yellow, "border-yellow-400");
   } else {
     show(responses.green, "border-green-500");
@@ -232,3 +215,4 @@ function analyzeFlag() {
     resultBox.classList.remove("hidden");
   }
 }
+

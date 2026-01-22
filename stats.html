@@ -13,6 +13,11 @@
   <p id="disagree" class="mb-2">👎 Disagree: 0</p>
   <p id="accuracy" class="font-bold mt-4">Accuracy: 0%</p>
 
+  <button onclick="downloadCSV()"
+    class="bg-blue-600 mt-4 px-4 py-2 rounded">
+    Download CSV
+  </button>
+
   <a href="index.html" class="text-blue-400 mt-4 block">← Back to App</a>
 </div>
 
@@ -25,6 +30,18 @@
   document.getElementById("agree").innerText = "👍 Agree: " + agree;
   document.getElementById("disagree").innerText = "👎 Disagree: " + disagree;
   document.getElementById("accuracy").innerText = "Accuracy: " + accuracy + "%";
+
+  function downloadCSV() {
+    const csv = "agree,disagree\n" + agree + "," + disagree;
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "feedback.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 </script>
 
 </body>

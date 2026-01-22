@@ -1,93 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-EXJ2S9KQRL"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-EXJ2S9KQRL');
-</script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9518032393103480"
-     crossorigin="anonymous"></script>
-  <meta charset="UTF-8" />
-  <title>Relationship Red Flag Detector 🚩</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
-
-    /* Result animation */
-    .fade-slide {
-      animation: fadeSlide .35s ease-out;
-    }
-    @keyframes fadeSlide {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Relationship Red Flag Detector 🚩</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-black text-white min-h-screen flex items-center justify-center px-4">
+<body class="bg-black text-white min-h-screen flex justify-center items-center px-4">
 
-  <main class="w-full max-w-md">
-    <section class="bg-zinc-900/90 backdrop-blur p-6 rounded-2xl shadow-xl border border-zinc-800">
-      
-      <header class="mb-5 text-center">
-        <h1 class="text-3xl font-extrabold tracking-tight">
-          Relationship Red Flag Detector 🚩
-        </h1>
-        <p class="text-zinc-400 text-sm mt-2">
-          Type ONE thing your partner does.
-        </p>
-      </header>
+<div class="max-w-md w-full bg-zinc-900 p-6 rounded-xl shadow-xl text-center">
 
-      <div class="space-y-4">
-        <input
-          id="inputText"
-          type="text"
-          placeholder="e.g. replies late but posts stories"
-          class="w-full px-4 py-3 rounded-xl text-black bg-white
-                 focus:outline-none focus:ring-2 focus:ring-red-500"
-        />
+  <h1 class="text-3xl font-bold mb-2">Relationship Red Flag Detector 🚩</h1>
+  <p class="text-zinc-400 text-sm mb-4">Type one thing your partner does.</p>
 
-        <button
-          onclick="analyzeFlag()"
-          class="w-full py-3 rounded-xl font-bold
-                 bg-red-600 hover:bg-red-700 active:scale-[0.99]
-                 transition"
-        >
-          Analyze 🚩
-        </button>
-      </div>
+  <input id="inputText" type="text"
+    placeholder="e.g. replies late but posts stories"
+    class="w-full p-3 rounded text-black mb-4"/>
 
-      <!-- RESULT -->
-      <div
-        id="resultBox"
-        class="hidden mt-6 p-4 rounded-xl border text-left text-sm fade-slide"
-      ></div>
+  <button onclick="analyzeFlag()"
+    class="w-full bg-red-600 hover:bg-red-700 p-3 rounded font-bold">
+    Analyze 🚩
+  </button>
 
-      <footer class="mt-6 text-center">
-        <p class="text-xs text-zinc-500">
-  For entertainment purposes only.<br>
-  <a href="privacy.html">Privacy Policy</a> | 
-  <a href="terms.html">Terms</a> | 
-  <a href="about.html">About</a>
-</p>
-      </footer>
+  <div id="resultBox" class="hidden mt-4 p-4 border rounded text-left text-sm"></div>
 
-    </section>
+  <div id="feedbackBox" class="hidden mt-4 text-center">
+    <p class="mb-2">Was this accurate?</p>
+    <button onclick="sendFeedback(true)"
+      class="bg-green-600 px-4 py-2 rounded mr-2">👍 Agree</button>
+    <button onclick="sendFeedback(false)"
+      class="bg-red-600 px-4 py-2 rounded">👎 Disagree</button>
+    <p id="thanksMsg" class="text-sm mt-2 hidden">Thanks for your feedback ❤️</p>
+  </div>
 
-    <p class="mt-4 text-center text-xs text-zinc-600">
-      Built for fun • Fast & private
-    </p>
-  </main>
+<a href="stats.html" class="block mt-4 text-blue-400 text-sm">View accuracy stats</a>
 
-  <script src="script.js"></script>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
